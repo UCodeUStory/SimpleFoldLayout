@@ -20,22 +20,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private boolean isFirst = true;
     private List<Integer> walls;
 
-    private int item_normal_height;
     private int item_max_height;
-    private float item_normal_alpha;
-    private float item_max_alpha;
-    private float item_normal_font_size;
-    private float item_max_font_size;
 
     public MyAdapter(Context context, List<Integer> walls) {
         this.walls = walls;
         item_max_height = (int) context.getResources().getDimension(R.dimen.item_max_height);
-        item_normal_height = (int) context.getResources().getDimension(R.dimen.item_normal_height);
-        item_normal_font_size = context.getResources().getDimension(R.dimen.item_normal_font_size);
-        item_max_font_size = context.getResources().getDimension(R.dimen.item_max_font_size);
-        item_normal_alpha = context.getResources().getFraction(R.fraction.item_normal_mask_alpha, 1, 1);
-        item_max_alpha = context.getResources().getFraction(R.fraction.item_max_mask_alpha, 1, 1);
-
     }
 
     @Override
@@ -48,15 +37,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (isFirst && position == 0) {
             isFirst = false;
-            holder.mark.setAlpha(item_max_alpha);
-            holder.text.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_max_font_size);
             holder.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item_max_height));
         } else {
-            holder.mark.setAlpha(item_normal_alpha);
-            holder.text.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_normal_font_size);
             holder.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item_max_height));
         }
-        holder.text.setText(String.format("光谷天地%d", position));
         holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(holder.imageView.getContext()).load(walls.get(position)).into(holder.imageView);
 
@@ -69,14 +53,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
-        public View mark;
-        public TextView text;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.image);
-            mark = itemView.findViewById(R.id.mark);
-            text = (TextView) itemView.findViewById(R.id.text);
         }
     }
 }
